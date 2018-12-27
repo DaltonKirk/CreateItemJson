@@ -25,10 +25,10 @@ modid = input()
 #Create models item json
 filename = "models/item/" + itemName + ".json"
 os.makedirs(os.path.dirname(filename), exist_ok=True)
-f = open(filename, "w+")
-f.write(jsonStart())
-f.write(jsonIndent(1) + jsonKeyValue("parent", "item/generated") + ",\n")
-f.write(jsonIndent(1) + jsonKey("textures") + jsonStart())
-f.write(jsonIndent(2) + jsonKeyValue("layer0", modid + ":items/" + itemName))
-f.write(jsonEnd(1))
-f.write(jsonEnd(0))
+with open (filename, "w+") as f:
+    f.write(jsonStart())
+    f.write(jsonIndent(1) + jsonKeyValue("parent", "item/generated") + ",\n")
+    f.write(jsonIndent(1) + jsonKey("textures") + jsonStart())
+    f.write(jsonIndent(2) + jsonKeyValue("layer0", modid + ":items/" + itemName))
+    f.write(jsonEnd(1))
+    f.write(jsonEnd(0))
