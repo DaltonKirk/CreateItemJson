@@ -15,14 +15,11 @@ def jsonKeyValue(key, value):
 
 def jsonKey(key):
     return "\"" + key + "\"" + ": "
-
-print("input item name")
-itemName = input()
-
-print("input modid")
-modid = input()
-
-itemType = input("input item type. Eg - 'generated' or 'handheld': ")
+    
+print("Create new item Json files")
+itemName = input("item name: ")
+modid = input("modid: ")
+itemType = input("item type. Eg - 'generated' or 'handheld': ")
 
 #Create models item json
 filename = "models/item/" + itemName + ".json"
