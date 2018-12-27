@@ -1,41 +1,35 @@
 import os
-import sys
+import json
 
-def jsonStart():
-    return "{\n"
 
-def jsonEnd(indent):    
-    return "\n" + jsonIndent(indent) + "}"
+def models_item_json(item_name, modid, item_type):
+    return {
+        "parent": f"item/{item_type}",
+        "textures": {
+            "layer0": f"{modid}:items/{item_name}"
+    }
+}
 
-def jsonIndent(amount):
-    amount = amount * 4
-    return " " * amount
 
-def jsonKeyValue(key, value):
-    return "\"" + key + "\"" + ": " + "\"" + value + "\""
+def create_file(data, item_name):
+    try:
+        filename = f"models/item/{item_name}.json"
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        with open (filename, "w+") as f:
+            json.dump(data, f, indent=4)
+    except:
+        print("Somthing went wrong")
+        raise
+    else:
+        print(f"{item_name}.json file created")
 
-def jsonKey(key):
-    return "\"" + key + "\"" + ": "
-    
-print("Create new item Json files")
-itemName = input("item name: ")
-modid = input("modid: ")
-itemType = input("item type. Eg - 'generated' or 'handheld': ")
 
-try:
-    filename = "models/item/" + itemName + ".json"
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    with open (filename, "w+") as f:
-        f.write(jsonStart())
-        f.write(jsonIndent(1) + jsonKeyValue("parent", "item/" + itemType) + ",\n")
-        f.write(jsonIndent(1) + jsonKey("textures") + jsonStart())
-        f.write(jsonIndent(2) + jsonKeyValue("layer0", modid + ":items/" + itemName))
-        f.write(jsonEnd(1))
-        f.write(jsonEnd(0))
-except:
-    print("Somthing went wrong")
-    raise
-else:
-    print(itemName + ".json file created")
-finally:
-    sys.exit()
+def main():
+    item_name = input("item name: ")
+    modid = input("modid: ")
+    item_type = input("item type. Eg - 'generated' or 'handheld': ")
+    create_file(models_item_json(item_name, modid, item_type), item_name)
+
+
+if __name__ == "__main__":
+    main()
